@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <!-- Link ke Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ06Rjdfphkc09wwmnxxj65zbtpqqnftn2/nt9ksq6ro3fPtoCqlDxd8hjsf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/home">
+                                Dashboard 1
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/admin-kelola-barang">
+                                Dashboard 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                {% block content %}
+                <!-- Konten dinamis akan muncul di sini -->
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- JavaScript untuk Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb6E0sA9iAKl2+ryE7f46jqJ9F+zvnepmPp6GJjQh3Q0lSkV1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyIIFG3h9m5s4V2Xo6gQPO6Fls5Sy0fHfVIy4uY0v5Y7S0RSGyY5z9z" crossorigin="anonymous"></script>
+</body>
+</html>
