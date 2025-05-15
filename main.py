@@ -24,7 +24,17 @@ def home():
 def kelolabarang():
     return render_template('admin/barang.html')
 
+@app.route('/admin/tambah-data-barang')
+def tambahbarang():
+    return render_template('admin/tambahbarang.html')
 
+@app.route('/admin/setting')
+def setting():
+    return render_template('admin/setting.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

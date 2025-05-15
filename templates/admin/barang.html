@@ -1,6 +1,61 @@
 {%extends 'admin/layout.html'%}
-{%block content%}
-Halaman Barang
+{%block isi%}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Daftar Barang</h2>
+      <a href="/admin/tambah-data-barang" class="btn btn-success">+ Tambah Data</a>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>No</th>
+            <th>Nama Barang</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Keyboard Mechanical</td>
+            <td>Elektronik</td>
+            <td>Rp 500.000</td>
+            <td>25</td>
+            <td>
+              <button class="btn btn-sm btn-primary">Edit</button>
+              <button class="btn btn-sm btn-danger">Hapus</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Mouse Wireless</td>
+            <td>Elektronik</td>
+            <td>Rp 150.000</td>
+            <td>50</td>
+            <td>
+              <button class="btn btn-sm btn-primary">Edit</button>
+              <button class="btn btn-sm btn-danger">Hapus</button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Buku Tulis</td>
+            <td>Alat Tulis</td>
+            <td>Rp 5.000</td>
+            <td>300</td>
+            <td>
+              <button class="btn btn-sm btn-primary">Edit</button>
+              <button class="btn btn-sm btn-danger">Hapus</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 {%endblock%}
 
 

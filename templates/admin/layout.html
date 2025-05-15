@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
-    <!-- Link ke Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ06Rjdfphkc09wwmnxxj65zbtpqqnftn2/nt9ksq6ro3fPtoCqlDxd8hjsf" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 15px;
+    }
+
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+
+    .main {
+      flex-grow: 1;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+    }
+
+    .navbar {
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/admin/home">
-                                Dashboard 1
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/admin-kelola-barang">
-                                Dashboard 2
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar d-flex flex-column p-3">
+      <h4 class="text-center mt-3">Admin Panel</h4>
+      <hr />
+      <a href="/admin/home">Dashboard</a>
+      <a href="/admin/admin-kelola-barang">Barang</a>
+      <a href="/admin/setting">Settings</a>
+      <a href="#">Logout</a>
+    </nav>
 
-            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
-                {% block content %}
-                <!-- Konten dinamis akan muncul di sini -->
-                {% endblock %}
-            </main>
-        </div>
+    <!-- Main content -->
+    <div class="main">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand" href="#">Welcome, Admin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="container-fluid p-4">
+        {%block isi %}  {%endblock%}
+      </div>
     </div>
+  </div>
 
-    <!-- JavaScript untuk Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb6E0sA9iAKl2+ryE7f46jqJ9F+zvnepmPp6GJjQh3Q0lSkV1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyIIFG3h9m5s4V2Xo6gQPO6Fls5Sy0fHfVIy4uY0v5Y7S0RSGyY5z9z" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
