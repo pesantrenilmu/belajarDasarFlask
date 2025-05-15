@@ -6,6 +6,11 @@ overflow-x: hidden;
 height: 100vh;
 background-color: #343a40;
 padding-top: 1rem;
+ /* adjust to leave space for navbar */
+position: fixed;
+top: 0;
+left: 0;
+overflow-y: auto;
 }
 .sidebar a {
 color: white;
