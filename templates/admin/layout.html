@@ -1,64 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
-    <!-- Link ke Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halaman Admin</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      padding-top: 56px;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar .nav-link.active {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">MyApp</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Notifications</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sign Out</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <div class="row">
-            <!-- <nav class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-sticky"> -->
-                <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-                    <div class="position-sticky pt-5">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/admin/home">
-                                Dashboard 1
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/admin-kelola-barang">
-                                Dashboard 2
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <!-- <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4"> -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-5 mt-5">
-                {% block content %}
-                <!-- Konten dinamis akan muncul di sini -->
-                {% endblock %}
-            </main>
-        </div>
+      <a class="navbar-brand" href="#">Admin Panel</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary text-white ms-2" href="#">Sign Out</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <!-- JavaScript untuk Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb6E0sA9iAKl2+ryE7f46jqJ9F+zvnepmPp6GJjQh3Q0lSkV1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyIIFG3h9m5s4V2Xo6gQPO6Fls5Sy0fHfVIy4uY0v5Y7S0RSGyY5z9z" crossorigin="anonymous"></script>
+  <!-- Sidebar for desktop -->
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar p-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link " href="/admin/home">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/admin-kelola-barang">Kelola Barang</a>
+          </li>
+         
+        </ul>
+      </nav>
+
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          {% endfor %}
+          {% endif %}
+        {% endwith %}
+            {%block content%} {%endblock%}
+      </main>
+    </div>
+  </div>
+
+  <!-- Sidebar Offcanvas (mobile) -->
+  <div class="offcanvas offcanvas-start bg-light" tabindex="-1" id="offcanvasSidebar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu Admin</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="/admin/home">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin/admin-kelola-barang">Kelola Barang</a>
+        </li>
+       
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
