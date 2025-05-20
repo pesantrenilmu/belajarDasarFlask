@@ -6,6 +6,6 @@
     - `pip install flask-mysql` atau jika tidak bisa
     - `python -m pip install flask-mysql` 
 
-## Langkah Untuk Database
-- buat database baru dengan nama `dbtokoa` atau bisa disesuikan 
+## Persiapan Database
+- buat database baru dengan nama `dbtokoa` atau bisa disesuikan di MySql
 - import database yang ada pada repository ini kedalam database yang sebelumnya telah dibuat 
