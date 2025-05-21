@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, session
 from flaskext.mysql import MySQL
 app = Flask(__name__)
 app.secret_key = 'rahasia'
@@ -8,6 +8,24 @@ db.init_app(app)
 @app.route('/')
 def index():
     return render_template('user/index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM user where username=%s and password=%s",(username,password))
+        data = cursor.fetchone()
+        if data:
+            session['user']=username
+            return redirect('/admin/home')
+        else:
+            flash('Email atau password salah!', 'danger')
+            return redirect('/login')
+
+    return render_template('login.html')
+
 @app.route('/tentang')
 def tentang():
     return render_template('user/tentang.html')
@@ -21,6 +39,8 @@ def kontak():
 
 @app.route('/admin/home')
 def home():
+    if 'user' not in session:
+        return redirect('/login')
     return render_template('admin/index.html')
 
 @app.route('/admin/admin-kelola-barang')
@@ -108,5 +128,10 @@ def hapus_barang(id):
 
     return redirect('/admin/admin-kelola-barang')
 
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/login')
 if __name__ == '__main__':
     app.run(debug=True)
