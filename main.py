@@ -133,5 +133,89 @@ def hapus_barang(id):
 def logout():
     session.pop('user', None)
     return redirect('/login')
+
+
+
+
+@app.route('/admin/admin-kelola-pengguna')
+def kelolapengguna():
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM barang")
+        data = cursor.fetchall()
+    except Exception as e:
+        flash(f"Gagal mengambil data: {e}", "danger")
+    return render_template('admin/pengguna.html', hasil=data)
+
+
+
+@app.route('/admin/admin-kelola-user')
+def kelolauser():
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM user")
+        data = cursor.fetchall()
+    except Exception as e:
+        flash(f"Gagal mengambil data: {e}", "danger")
+    return render_template('admin/user.html', hasil=data)
+
+
+@app.route('/admin/form-tambah-user', methods=['GET', 'POST'])
+def formuser():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+       
+        try:
+            cursor = db.get_db().cursor()
+            sql = "INSERT INTO user (username, password) VALUES (%s, %s)"
+            val = (username, password)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data user berhasil ditambahkan!", "success")
+        return redirect('/admin/admin-kelola-user')
+    return render_template('admin/formuser.html')
+
+@app.route('/admin/form-edit-user/<id>', methods=['GET', 'POST'])
+def formedituser(id):
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+       
+        try:
+            cursor = db.get_db().cursor()
+            sql = """
+                UPDATE user
+                SET username=%s, password=%s
+                WHERE id=%s
+            """
+            val = (username, password,id)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data user berhasil diupdate!", "success")
+        return redirect('/admin/admin-kelola-user')
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM user where id=%s",(id))
+        data = cursor.fetchone()
+    except Exception as e:
+        flash(f'Gagal mengambil data: {e}', 'danger')
+        return redirect('/admin/admin-kelola-user')
+    return render_template('admin/formedituser.html', user=data)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
