@@ -9,6 +9,7 @@ db.init_app(app)
 def index():
     return render_template('user/index.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -25,6 +26,30 @@ def login():
             return redirect('/login')
 
     return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+   
+    if request.method == 'POST':
+        if str(request.form['password'])!=str(request.form['konfirmasipassword']):
+            flash('password dan konfirmasi password tidak cocok!', 'danger')
+            return redirect('/register')
+        username = request.form['username']
+        password = request.form['password']
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM user where username=%s",(username,))
+        data = cursor.fetchone()
+        if data:
+            flash('Maaf, username sudah ada!', 'danger')
+            return redirect('/register')
+        else:
+            cursor.execute("INSERT INTO user (username, password) VALUES (%s, %s)", (username, password))
+            db.get_db().commit()
+
+            flash('Berhasil! Silakan login menggunakan username dan password yang didaftarkan.', 'success')
+            return redirect('/login')
+
+    return render_template('register.html')
 
 @app.route('/tentang')
 def tentang():
